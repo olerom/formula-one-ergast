@@ -1,5 +1,7 @@
 package com.olerom.formula.console;
 
+import com.olerom.formula.core.ErgastConnection;
+
 /**
  * Date: 08.03.17
  *
@@ -11,6 +13,7 @@ public class Application {
     }
 
     private void run() {
-
+        ErgastConnection ergastConnection = new ErgastConnection();
+        ergastConnection.configureRequest();
     }
 }
