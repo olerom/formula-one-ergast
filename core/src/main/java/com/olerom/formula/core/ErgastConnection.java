@@ -24,7 +24,7 @@ public class ErgastConnection {
     }
 
     private void sendGetRequest() throws Exception {
-        String url = "http://ergast.com/api/f1/2016/1/results.json";
+        String url = "http://ergast.com/api/f1/2016/drivers.json";
 
         URL obj = new URL(url);
         HttpURLConnection httpURLConnection = (HttpURLConnection) obj.openConnection();
@@ -43,7 +43,7 @@ public class ErgastConnection {
         }
         in.close();
 
-
         System.out.println(response.toString());
+        new Parser().parse(response.toString());
     }
 }
