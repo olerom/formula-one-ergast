@@ -1,7 +1,8 @@
-package com.olerom.formula.core.enity;
+package com.olerom.formula.core.objects;
 
 /**
  * Date: 08.03.17
+ * Driver object
  *
  * @author olerom
  */

@@ -1,6 +1,8 @@
 package com.olerom.formula.console;
 
-import com.olerom.formula.core.ErgastConnection;
+import com.olerom.formula.core.Ergast;
+
+import java.io.IOException;
 
 /**
  * Date: 08.03.17
@@ -13,8 +15,15 @@ public class Application {
     }
 
     private void run() {
+        Ergast ergast = new Ergast();
 
-        ErgastConnection ergastConnection = new ErgastConnection();
-        ergastConnection.configureRequest();
+        try {
+            ergast.getDrivers(2016, 100, 0);
+            ergast.getCircuits(2016, 100, 0);
+            ergast.getConstructors(500, 0);
+            ergast.getSeasons(600, 0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
