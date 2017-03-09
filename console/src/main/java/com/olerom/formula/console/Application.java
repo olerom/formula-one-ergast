@@ -13,6 +13,7 @@ public class Application {
     }
 
     private void run() {
+
         ErgastConnection ergastConnection = new ErgastConnection();
         ergastConnection.configureRequest();
     }
