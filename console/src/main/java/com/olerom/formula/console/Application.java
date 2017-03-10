@@ -20,8 +20,8 @@ public class Application {
         try {
             ergast.getDrivers(2016, 100, 0);
             ergast.getCircuits(2016, 100, 0);
-            ergast.getConstructors(500, 0);
-            ergast.getSeasons(600, 0);
+            ergast.getConstructors(-1, 500, 0);
+            ergast.getSeasons(-1, -1, -1);
         } catch (IOException e) {
             e.printStackTrace();
         }

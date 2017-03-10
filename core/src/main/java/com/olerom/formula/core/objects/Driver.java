@@ -30,6 +30,38 @@ public class Driver {
         this.nationality = nationality;
     }
 
+    public String getDriverId() {
+        return driverId;
+    }
+
+    public int getPermanentNumber() {
+        return permanentNumber;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getGivenName() {
+        return givenName;
+    }
+
+    public String getFamilyName() {
+        return familyName;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
     @Override
     public String toString() {
         return "Driver{" +

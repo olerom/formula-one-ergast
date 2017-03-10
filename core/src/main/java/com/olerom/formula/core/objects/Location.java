@@ -25,4 +25,20 @@ public class Location {
         this.locality = locality;
         this.country = country;
     }
+
+    public float getLat() {
+        return lat;
+    }
+
+    public float getLng() {
+        return lng;
+    }
+
+    public String getLocality() {
+        return locality;
+    }
+
+    public String getCountry() {
+        return country;
+    }
 }

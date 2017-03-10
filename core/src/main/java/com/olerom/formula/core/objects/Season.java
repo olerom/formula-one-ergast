@@ -22,4 +22,12 @@ public class Season {
         this.season = Integer.valueOf(season);
         this.url = url;
     }
+
+    public int getSeason() {
+        return season;
+    }
+
+    public String getUrl() {
+        return url;
+    }
 }

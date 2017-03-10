@@ -12,6 +12,22 @@ public class Circuit {
     private String circuitName;
     private Location location;
 
+    public String getCircuitId() {
+        return circuitId;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getCircuitName() {
+        return circuitName;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
     public Circuit(String circuitId, String url, String circuitName, Location location) {
         this.circuitId = circuitId;
         this.url = url;
