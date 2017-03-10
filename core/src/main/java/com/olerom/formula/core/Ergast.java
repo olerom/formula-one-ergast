@@ -1,10 +1,6 @@
 package com.olerom.formula.core;
 
-import com.olerom.formula.core.objects.Circuit;
-import com.olerom.formula.core.objects.Constructor;
-import com.olerom.formula.core.objects.Driver;
-import com.olerom.formula.core.objects.Season;
-import com.olerom.formula.core.parser.Parser;
+import com.olerom.formula.core.objects.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,6 +8,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+
+import static com.olerom.formula.core.parser.Parser.parse;
 
 /**
  * Date: 08.03.17
@@ -25,65 +23,81 @@ public class Ergast {
     private final static String CIRCUITS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/circuits.json?limit={LIMIT}&offset={OFFSET}";
     private final static String CONSTRUCTORS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/constructors.json?limit={LIMIT}&offset={OFFSET}";
     private final static String SEASONS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/seasons.json?limit={LIMIT}&offset={OFFSET}";
+    private final static String SCHEDULE_REQ = "http://ergast.com/api/{SERIES}/{SEASON}.json?limit={LIMIT}&offset={OFFSET}";
 
     /**
      * @param season season which you want to get, (-1) if you want to get all the seasons.
      * @param limit  the number of results that are returned. up to a maximum value of 1000.
      *               Please use the smallest value that your application needs. If (-1), the default value is 30.
-     * @param offset specifies an offset into the result set.
-     * @return list of drivers that satisfy your query
+     * @param offset specifies an offset into the result set. If (-1), the default value is 30.
+     * @return list of drivers that satisfy your query.
      */
     public List<Driver> getDrivers(int season, int limit, int offset) throws IOException {
         String url = getUrl(DRIVERS_REQ, season, limit, offset);
         String json = getJson(url);
-        return new Parser().parse(json, "DriverTable", "Drivers", Driver.class);
+        return parse(json, "DriverTable", "Drivers", Driver.class);
     }
 
     /**
      * @param season season which you want to get, (-1) if you want to get all the seasons.
      * @param limit  the number of results that are returned. up to a maximum value of 1000.
      *               Please use the smallest value that your application needs. If (-1), the default value is 30.
-     * @param offset specifies an offset into the result set.
-     * @return list of circuits that satisfy your query
+     * @param offset specifies an offset into the result set. If (-1), the default value is 30.
+     * @return list of circuits that satisfy your query.
      */
     public List<Circuit> getCircuits(int season, int limit, int offset) throws IOException {
         String url = getUrl(CIRCUITS_REQ, season, limit, offset);
         String json = getJson(url).replaceAll("long", "lng");
-        return new Parser().parse(json, "CircuitTable", "Circuits", Circuit.class);
+        return parse(json, "CircuitTable", "Circuits", Circuit.class);
     }
 
     /**
      * @param season season which you want to get, (-1) if you want to get all the seasons.
      * @param limit  the number of results that are returned. up to a maximum value of 1000.
      *               Please use the smallest value that your application needs. If (-1), the default value is 30.
-     * @param offset specifies an offset into the result set.
-     * @return list of seasons that satisfy your query
+     * @param offset specifies an offset into the result set. If (-1), the default value is 30.
+     * @return list of seasons that satisfy your query.
      */
     public List<Season> getSeasons(int season, int limit, int offset) throws IOException {
         String url = getUrl(SEASONS_REQ, season, limit, offset);
         String json = getJson(url);
-        return new Parser().parse(json, "SeasonTable", "Seasons", Season.class);
+        return parse(json, "SeasonTable", "Seasons", Season.class);
     }
 
     /**
      * @param season season which you want to get, (-1) if you want to get all the seasons.
      * @param limit  the number of results that are returned. up to a maximum value of 1000.
      *               Please use the smallest value that your application needs. If (-1), the default value is 30.
-     * @param offset specifies an offset into the result set.
-     * @return list of constructors that satisfy your query
+     * @param offset specifies an offset into the result set. If (-1), the default value is 30.
+     * @return list of constructors that satisfy your query.
      */
     public List<Constructor> getConstructors(int season, int limit, int offset) throws IOException {
         String url = getUrl(CONSTRUCTORS_REQ, season, limit, offset);
         String json = getJson(url);
-        return new Parser().parse(json, "ConstructorTable", "Constructors", Constructor.class);
+        return parse(json, "ConstructorTable", "Constructors", Constructor.class);
+    }
+
+    /**
+     * @param season season which you want to get, (-1) if you want to get all the seasons.
+     * @param limit  the number of results that are returned. up to a maximum value of 1000.
+     *               Please use the smallest value that your application needs. If (-1), the default value is 30.
+     * @param offset specifies an offset into the result set. If (-1), the default value is 30.
+     * @return list of constructors that satisfy your query.
+     */
+    public List<Schedule> getSchedule(int season, int limit, int offset) throws IOException {
+        String url = getUrl(SCHEDULE_REQ, season, limit, offset);
+        String json = getJson(url);
+        return parse(json, "RaceTable", "Races", Schedule.class);
     }
 
     private String getUrl(String url, int season, int limit, int offset) {
         return url.
                 replace("{SERIES}", "f1").
-                replace("{SEASON}/", season == -1 ? "" : String.valueOf(season) + "/").
+                replace("{SEASON}", season == -1 ? "" : String.valueOf(season)).
                 replace("{LIMIT}", limit == -1 ? "30" : String.valueOf(limit)).
-                replace("{OFFSET}", offset == -1 ? "0" : String.valueOf(offset));
+                replace("{OFFSET}", offset == -1 ? "0" : String.valueOf(offset)).
+                replace("f1//", "f1/").
+                replace("/.json", ".json");
     }
 
     private String getJson(String url) throws IOException {

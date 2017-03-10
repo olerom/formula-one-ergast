@@ -26,19 +26,13 @@ public class Location {
         this.country = country;
     }
 
-    public float getLat() {
-        return lat;
-    }
-
-    public float getLng() {
-        return lng;
-    }
-
-    public String getLocality() {
-        return locality;
-    }
-
-    public String getCountry() {
-        return country;
+    @Override
+    public String toString() {
+        return "Location{" +
+                "lat=" + lat +
+                ", lng=" + lng +
+                ", locality='" + locality + '\'' +
+                ", country='" + country + '\'' +
+                '}';
     }
 }

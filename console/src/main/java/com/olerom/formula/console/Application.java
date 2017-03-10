@@ -1,8 +1,10 @@
 package com.olerom.formula.console;
 
 import com.olerom.formula.core.Ergast;
+import com.olerom.formula.core.objects.*;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Date: 08.03.17
@@ -18,10 +20,11 @@ public class Application {
         Ergast ergast = new Ergast();
 
         try {
-            ergast.getDrivers(2016, 100, 0);
-            ergast.getCircuits(2016, 100, 0);
-            ergast.getConstructors(-1, 500, 0);
-            ergast.getSeasons(-1, -1, -1);
+//            List<Circuit> circuits = ergast.getCircuits(2016, 10, 0);
+//            List<Driver> drivers = ergast.getDrivers(2016, 10, 0);
+//            List<Constructor> constructors = ergast.getConstructors(-1, 10, 0);
+//            List<Season> seasons = ergast.getSeasons(-1, 10, -1);
+            List<Schedule> schedules = ergast.getSchedule(-1, 10, -1);
         } catch (IOException e) {
             e.printStackTrace();
         }
