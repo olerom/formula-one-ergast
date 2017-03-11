@@ -13,8 +13,8 @@ public class Deserializer<T> implements JsonDeserializer<T> {
     @Override
     public T deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext)
             throws JsonParseException {
-        JsonElement location = jsonElement.getAsJsonObject();
+        JsonElement json = jsonElement.getAsJsonObject();
 
-        return new Gson().fromJson(location, type);
+        return new Gson().fromJson(json, type);
     }
 }

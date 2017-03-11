@@ -14,15 +14,15 @@ public class Schedule {
     private String date;
     private String time;
 
-//    public Schedule(int season, int round, String url, String raceName, Circuit circuit, String date, String time) {
-//        this.season = season;
-//        this.round = round;
-//        this.url = url;
-//        this.raceName = raceName;
-//        this.circuit = circuit;
-//        this.date = date;
-//        this.time = time;
-//    }
+    public Schedule(int season, int round, String url, String raceName, Circuit circuit, String date, String time) {
+        this.season = season;
+        this.round = round;
+        this.url = url;
+        this.raceName = raceName;
+        this.circuit = circuit;
+        this.date = date;
+        this.time = time;
+    }
 
     public Schedule(String season, String round, String url, String raceName, Circuit circuit, String date, String time) {
         this.season = Integer.valueOf(season);
