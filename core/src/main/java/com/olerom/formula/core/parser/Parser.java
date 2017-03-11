@@ -3,6 +3,7 @@ package com.olerom.formula.core.parser;
 import com.google.gson.*;
 import com.olerom.formula.core.objects.*;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +15,9 @@ import java.util.List;
 public class Parser {
 
     public static <T> List<T> parse(String json, String[] jsonObjects, Class<T> type) {
-        json = fixJson(json);
+        json = fixJson(json, type);
 
-        JsonElement jelement = new JsonParser().parse(json);
-        JsonObject jobject = jelement.getAsJsonObject();
-        jobject = jobject.getAsJsonObject("MRData");
-        for (int i = 0; i < jsonObjects.length - 1; i++) {
-            jobject = jobject.getAsJsonObject(jsonObjects[i]);
-        }
-        JsonArray jarray = jobject.getAsJsonArray(jsonObjects[jsonObjects.length - 1]);
+        JsonArray jarray = getJsonArray(json, jsonObjects, type);
         List<T> entities = new ArrayList<>();
 
         Gson gson = getGson();
@@ -37,16 +32,40 @@ public class Parser {
         return entities;
     }
 
-    private static String fixJson(String json) {
+    private static JsonArray getJsonArray(String json, String[] jsonObjects, Type type) {
+        JsonElement jelement = new JsonParser().parse(json);
+        JsonObject jobject = jelement.getAsJsonObject();
+        jobject = jobject.getAsJsonObject("MRData");
+
+        if (type == RaceResult.class || type == Qualification.class) {
+            for (int i = 0; i < jsonObjects.length - 2; i++) {
+                jobject = jobject.getAsJsonObject(jsonObjects[i]);
+            }
+            jobject = jobject.getAsJsonArray(jsonObjects[jsonObjects.length - 2]).get(0).getAsJsonObject();
+        } else {
+            for (int i = 0; i < jsonObjects.length - 1; i++) {
+                jobject = jobject.getAsJsonObject(jsonObjects[i]);
+            }
+        }
+        return jobject.getAsJsonArray(jsonObjects[jsonObjects.length - 1]);
+    }
+
+    // TODO: optimize
+    private static String fixJson(String json, Type type) {
         return json.
                 replace("\"Location\"", "\"location\"").
                 replace("\"Circuit\"", "\"circuit\"").
                 replace("\"Constructor\"", "\"constructor\"").
                 replace("\"Driver\"", "\"driver\"").
                 replace("\"Time\"", "\"time\"").
-                replace("\"AverageSpeed\"", "\"averageSpeed\"");
+                replace("\"AverageSpeed\"", "\"averageSpeed\"").
+                replace("\"FastestLap\"", "\"fastestLap\"").
+                replace("\"Q1\"", "\"q1\"").
+                replace("\"Q2\"", "\"q2\"").
+                replace("\"Q3\"", "\"q3\"");
     }
 
+    // TODO: optimize
     private static Gson getGson() {
         return new GsonBuilder().
                 registerTypeAdapter(Location.class, new Deserializer<Location>()).

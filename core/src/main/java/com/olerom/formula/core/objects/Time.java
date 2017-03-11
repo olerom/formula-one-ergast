@@ -9,11 +9,6 @@ public class Time {
     private int millis;
     private String time;
 
-    public Time(String time) {
-        this.millis = -1;
-        this.time = time;
-    }
-
     public Time(int millis, String time) {
         this.millis = millis;
         this.time = time;
@@ -25,5 +20,13 @@ public class Time {
 
     public String getTime() {
         return time;
+    }
+
+    @Override
+    public String toString() {
+        return "Time{" +
+                "millis=" + millis +
+                ", time='" + time + '\'' +
+                '}';
     }
 }

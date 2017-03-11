@@ -78,4 +78,21 @@ public class RaceResult {
     public FastestLap getFastestLap() {
         return fastestLap;
     }
+
+    @Override
+    public String toString() {
+        return "RaceResult{" +
+                "number=" + number +
+                ", position=" + position +
+                ", positionText='" + positionText + '\'' +
+                ", points=" + points +
+                ", driver=" + driver +
+                ", constructor=" + constructor +
+                ", grid=" + grid +
+                ", laps=" + laps +
+                ", status='" + status + '\'' +
+                ", time=" + time +
+                ", fastestLap=" + fastestLap +
+                '}';
+    }
 }

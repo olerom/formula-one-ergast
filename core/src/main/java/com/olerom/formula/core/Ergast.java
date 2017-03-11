@@ -24,7 +24,9 @@ public class Ergast {
     private final static String CONSTRUCTORS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/constructors.json?limit={LIMIT}&offset={OFFSET}";
     private final static String SEASONS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/seasons.json?limit={LIMIT}&offset={OFFSET}";
     private final static String SCHEDULE_REQ = "http://ergast.com/api/{SERIES}/{SEASON}.json?limit={LIMIT}&offset={OFFSET}";
-    private final static String RESULTS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/2/results.json";
+    private final static String RESULTS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/results.json";
+    private final static String QUALIFYING_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/qualifying.json";
+    private final static String DRIVER_STANDINGS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/driverStandings.json";
 
     /**
      * @param season is a season which you want to get, (-1) if you want to get all the seasons.
@@ -83,7 +85,7 @@ public class Ergast {
      * @param limit  is a number of results that are returned. up to a maximum value of 1000.
      *               Please use the smallest value that your application needs. If (-1), the default value is 30.
      * @param offset specifies an offset into the result set. If (-1), the default value is 30.
-     * @return list of constructors that satisfy your query.
+     * @return list of schedules that satisfy your query.
      */
     public List<Schedule> getSchedules(int season, int limit, int offset) throws IOException {
         String url = getUrl(SCHEDULE_REQ, season, limit, offset);
@@ -93,17 +95,52 @@ public class Ergast {
 
     /**
      * @param season is a season which you want to get, (-1) if you want to get all the seasons.
+     * @param round  is a round which you want to get.
      * @param limit  is a number of results that are returned. up to a maximum value of 1000.
      *               Please use the smallest value that your application needs. If (-1), the default value is 30.
      * @param offset specifies an offset into the result set. If (-1), the default value is 30.
-     * @return list of constructors that satisfy your query.
+     * @return list of race results that satisfy your query.
      */
-    public List<RaceResult> getRaceResults(int season, int limit, int offset) throws IOException {
+    public List<RaceResult> getRaceResults(int season, int round, int limit, int offset) throws IOException {
         String url = getUrl(RESULTS_REQ, season, limit, offset);
+        url = getResultsUrl(url, round);
         String json = getJson(url);
         return parse(json, new String[]{"RaceTable", "Races", "Results"}, RaceResult.class);
     }
 
+    /**
+     * @param season is a season which you want to get, (-1) if you want to get all the seasons.
+     * @param round  is a round which you want to get.
+     * @param limit  is a number of results that are returned. up to a maximum value of 1000.
+     *               Please use the smallest value that your application needs. If (-1), the default value is 30.
+     * @param offset specifies an offset into the result set. If (-1), the default value is 30.
+     * @return list of qualification results that satisfy your query.
+     */
+    public List<Qualification> getQualificationResults(int season, int round, int limit, int offset) throws IOException {
+        String url = getUrl(QUALIFYING_REQ, season, limit, offset);
+        url = getResultsUrl(url, round);
+        String json = getJson(url);
+        return parse(json, new String[]{"RaceTable", "Races", "QualifyingResults"}, Qualification.class);
+    }
+
+    /**
+     * @param season is a season which you want to get, (-1) if you want to get all the seasons.
+     * @param round  is a round which you want to get.
+     * @param limit  is a number of results that are returned. up to a maximum value of 1000.
+     *               Please use the smallest value that your application needs. If (-1), the default value is 30.
+     * @param offset specifies an offset into the result set. If (-1), the default value is 30.
+     * @return list of driver standings that satisfy your query.
+     */
+    public List<DriverStandings> getDriverStandings(int season, int round, int limit, int offset) throws IOException {
+        String url = getUrl(DRIVER_STANDINGS_REQ, season, limit, offset);
+        url = getResultsUrl(url, round);
+        String json = getJson(url);
+        return parse(json, new String[]{"RaceTable", "Races", "QualifyingResults"}, DriverStandings.class);
+    }
+
+    private String getResultsUrl(String url, int round) {
+        return url.replace("{ROUND}", String.valueOf(round));
+    }
 
     private String getUrl(String url, int season, int limit, int offset) {
         return url.

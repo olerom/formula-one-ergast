@@ -21,4 +21,12 @@ public class AverageSpeed {
     public double getSpeed() {
         return speed;
     }
+
+    @Override
+    public String toString() {
+        return "AverageSpeed{" +
+                "units='" + units + '\'' +
+                ", speed=" + speed +
+                '}';
+    }
 }

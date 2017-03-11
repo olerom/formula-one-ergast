@@ -33,4 +33,14 @@ public class FastestLap {
     public AverageSpeed getAverageSpeed() {
         return averageSpeed;
     }
+
+    @Override
+    public String toString() {
+        return "FastestLap{" +
+                "rank=" + rank +
+                ", lap=" + lap +
+                ", time=" + time +
+                ", averageSpeed=" + averageSpeed +
+                '}';
+    }
 }
