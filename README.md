@@ -1,3 +1,2 @@
-# Formula One: history
-Application that allows you to find a historical record of F1 racing data.
-Using [Ergast Developer API](http://ergast.com/)
+# Formula One Ergast
+Java implementation to get information from [Ergast Developer API](http://ergast.com/mrd/).

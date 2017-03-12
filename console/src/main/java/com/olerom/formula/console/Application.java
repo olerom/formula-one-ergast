@@ -17,16 +17,16 @@ public class Application {
     }
 
     private void run() {
-        Ergast ergast = new Ergast();
+        Ergast ergast = new Ergast(2016, 30, 0);
 
         try {
-//            List<Circuit> circuits = ergast.getCircuits(2016, 10, 0);
-//            List<Driver> drivers = ergast.getDrivers(2016, 10, 0);
-//            List<Constructor> constructors = ergast.getConstructors(-1, 10, 0);
-//            List<Season> seasons = ergast.getSeasons(-1, 10, -1);
-//            List<Schedule> schedules = ergast.getSchedules(-1, 10, -1);
-//            List<RaceResult> results = ergast.getRaceResults(2016, 21, -1, -1);
-            List<Qualification> qualifications = ergast.getQualificationResults(2016, 2, -1, -1);
+            List<Circuit> circuits = ergast.getCircuits();
+            List<Driver> drivers = ergast.getDrivers();
+            List<Constructor> constructors = ergast.getConstructors();
+            List<Season> seasons = ergast.getSeasons();
+            List<Schedule> schedules = ergast.getSchedules();
+            List<RaceResult> results = ergast.getRaceResults(2);
+            List<Qualification> qualifications = ergast.getQualificationResults(2);
         } catch (IOException e) {
             e.printStackTrace();
         }
