@@ -25,10 +25,6 @@ public class Parser {
             entities.add(gson.fromJson(jarray.get(i).getAsJsonObject(), type));
         }
 
-        for (T entitySout : entities) {
-            System.out.println(entitySout);
-        }
-
         return entities;
     }
 
@@ -37,7 +33,8 @@ public class Parser {
         JsonObject jobject = jelement.getAsJsonObject();
         jobject = jobject.getAsJsonObject("MRData");
 
-        if (type == RaceResult.class || type == Qualification.class) {
+        if (type == RaceResult.class || type == Qualification.class
+                || type == DriverStandings.class || type == ConstructorStandings.class) {
             for (int i = 0; i < jsonObjects.length - 2; i++) {
                 jobject = jobject.getAsJsonObject(jsonObjects[i]);
             }
@@ -62,7 +59,8 @@ public class Parser {
                 replace("\"FastestLap\"", "\"fastestLap\"").
                 replace("\"Q1\"", "\"q1\"").
                 replace("\"Q2\"", "\"q2\"").
-                replace("\"Q3\"", "\"q3\"");
+                replace("\"Q3\"", "\"q3\"").
+                replace("\"Constructors\"", "\"constructors\"");
     }
 
     // TODO: optimize

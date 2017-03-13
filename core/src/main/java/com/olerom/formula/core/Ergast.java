@@ -28,6 +28,7 @@ public class Ergast {
     private final static String RESULTS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/results.json";
     private final static String QUALIFYING_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/qualifying.json";
     private final static String DRIVER_STANDINGS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/driverStandings.json";
+    private final static String CONSTRUCTOR_STANDINGS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/constructorStandings.json";
 
     private String series;
     private int season;
@@ -134,10 +135,29 @@ public class Ergast {
      * @return list of driver standings that satisfy your query.
      */
     public List<DriverStandings> getDriverStandings(int round) throws IOException {
+        if (this.season == -1) {
+            throw new SeasonException("Driver standing requires season to be mentioned");
+        }
+
         String url = getUrl(DRIVER_STANDINGS_REQ);
         url = getResultsUrl(url, round);
         String json = getJson(url);
-        return parse(json, new String[]{"RaceTable", "Races", "QualifyingResults"}, DriverStandings.class);
+        return parse(json, new String[]{"StandingsTable", "StandingsLists", "DriverStandings"}, DriverStandings.class);
+    }
+
+    /**
+     * @param round is a round which you want to get.
+     * @return list of constructor standings that satisfy your query.
+     */
+    public List<ConstructorStandings> getConstructorStandings(int round) throws IOException {
+        if (this.season == -1) {
+            throw new SeasonException("Constructor standing requires season to be mentioned");
+        }
+
+        String url = getUrl(CONSTRUCTOR_STANDINGS_REQ);
+        url = getResultsUrl(url, round);
+        String json = getJson(url);
+        return parse(json, new String[]{"StandingsTable", "StandingsLists", "ConstructorStandings"}, ConstructorStandings.class);
     }
 
     private String getResultsUrl(String url, int round) {
@@ -171,5 +191,37 @@ public class Ergast {
         in.close();
 
         return response.toString();
+    }
+
+    public String getSeries() {
+        return series;
+    }
+
+    public int getSeason() {
+        return season;
+    }
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setSeries(String series) {
+        this.series = series;
+    }
+
+    public void setSeason(int season) {
+        this.season = season;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
     }
 }
