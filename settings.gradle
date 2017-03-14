@@ -1,4 +1,3 @@
-rootProject.name = 'formula-one-history'
+rootProject.name = 'formula-one-ergast'
 include 'core'
 include 'console'
-

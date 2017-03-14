@@ -1,5 +1,5 @@
 # Formula One Ergast
-Java implementation to get information from [Ergast Developer API](http://ergast.com/mrd/).
+Java implementation to get a historical record of motor racing data from [Ergast Developer API](http://ergast.com/mrd/).
 
 You have to initialize Ergast object:
 
@@ -7,7 +7,7 @@ You have to initialize Ergast object:
 
 `Ergast ergast = new Ergast(2016, 100, 2)`
 
-If you use default constructor, season will be set as (-1), limit is 30 and offset is 0.
+If you use default constructor, season will be set as -1, limit as 30 and offset as 0.
 You can get the following objects that satisfy Ergast queries:
 * [Season](http://ergast.com/mrd/methods/seasons/)
 * [Qualification](http://ergast.com/mrd/methods/qualifying/)
@@ -22,5 +22,6 @@ You can get the following objects that satisfy Ergast queries:
 * [FinishingStatus](http://ergast.com/mrd/methods/status/)
 
 For example, to get information about pit stops at final race of 2016 season with 100 limit: 
-`Ergast ergast = new Ergast(2016, 30, 0);
+
+`Ergast ergast = new Ergast(2016, 100, 0);
 ergast.getRacePitStops(21).forEach(System.out::println);`
