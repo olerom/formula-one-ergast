@@ -17,7 +17,7 @@ public class Application {
     }
 
     private void run() {
-        Ergast ergast = new Ergast(-1, 100, 0);
+        Ergast ergast = new Ergast(2016, 30, 0);
 
         try {
 //            ergast.getCircuits().forEach(System.out::println);
@@ -33,7 +33,8 @@ public class Application {
 //            ergast.getDriverStandings(-1).forEach(System.out::println);
 //            ergast.getConstructorStandings(-1).forEach(System.out::println);
 
-            ergast.getFinishingstatuses(-1).forEach(System.out::println);
+//            ergast.getFinishingstatuses(-1).forEach(System.out::println);
+            ergast.getLapTimes(11).forEach(System.out::println);
         } catch (IOException e) {
             e.printStackTrace();
         }

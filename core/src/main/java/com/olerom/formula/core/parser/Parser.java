@@ -60,7 +60,9 @@ public class Parser {
                 replace("\"Q1\"", "\"q1\"").
                 replace("\"Q2\"", "\"q2\"").
                 replace("\"Q3\"", "\"q3\"").
-                replace("\"Constructors\"", "\"constructors\"");
+                replace("\"Constructors\"", "\"constructors\"").
+                replace("\"Laps\"", "\"laps\"").
+                replace("\"Timings\"", "\"timings\"");
     }
 
     // TODO: optimize

@@ -30,6 +30,7 @@ public class Ergast {
     private final static String DRIVER_STANDINGS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/driverStandings.json";
     private final static String CONSTRUCTOR_STANDINGS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/constructorStandings.json";
     private final static String FINISHING_STATUS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/status.json";
+    private final static String LAPTIMES_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/laps.json";
 
     private String series;
     private int season;
@@ -176,6 +177,20 @@ public class Ergast {
         return parse(json, new String[]{"StatusTable", "Status"}, FinishingStatus.class);
     }
 
+    /**
+     * @param round is a round which you want to get.
+     * @return list of finishing statuses standings that satisfy your query.
+     */
+    public List<LapTimes> getLapTimes(int round) throws IOException {
+        if (this.season == -1 || round == -1) {
+            throw new SeasonException("Finishing status request requires season and round to be mentioned");
+        }
+
+        String url = getUrl(LAPTIMES_REQ);
+        url = getResultsUrl(url, round);
+        String json = getJson(url);
+        return parse(json, new String[]{"RaceTable", "Races"}, LapTimes.class);
+    }
 
     private String getResultsUrl(String url, int round) {
         return url.replace("{ROUND}/", round == -1 ? "" : String.valueOf(round) + "/");
