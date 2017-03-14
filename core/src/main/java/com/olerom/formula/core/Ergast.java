@@ -31,6 +31,7 @@ public class Ergast {
     private final static String CONSTRUCTOR_STANDINGS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/constructorStandings.json";
     private final static String FINISHING_STATUS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/status.json";
     private final static String LAPTIMES_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/laps.json";
+    private final static String PITSTOPS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/pitstops.json";
 
     private String series;
     private int season;
@@ -179,7 +180,7 @@ public class Ergast {
 
     /**
      * @param round is a round which you want to get.
-     * @return list of finishing statuses standings that satisfy your query.
+     * @return list of lap times that satisfy your query.
      */
     public List<LapTimes> getLapTimes(int round) throws IOException {
         if (this.season == -1 || round == -1) {
@@ -190,6 +191,21 @@ public class Ergast {
         url = getResultsUrl(url, round);
         String json = getJson(url);
         return parse(json, new String[]{"RaceTable", "Races"}, LapTimes.class);
+    }
+
+    /**
+     * @param round is a round which you want to get.
+     * @return list of pit stops that satisfy your query.
+     */
+    public List<RacePitStops> getRacePitStops(int round) throws IOException {
+        if (this.season == -1 || round == -1) {
+            throw new SeasonException("Race pit stops request requires season and round to be mentioned");
+        }
+
+        String url = getUrl(PITSTOPS_REQ);
+        url = getResultsUrl(url, round);
+        String json = getJson(url);
+        return parse(json, new String[]{"RaceTable", "Races"}, RacePitStops.class);
     }
 
     private String getResultsUrl(String url, int round) {

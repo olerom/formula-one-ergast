@@ -34,7 +34,9 @@ public class Application {
 //            ergast.getConstructorStandings(-1).forEach(System.out::println);
 
 //            ergast.getFinishingstatuses(-1).forEach(System.out::println);
-            ergast.getLapTimes(11).forEach(System.out::println);
+//            ergast.getLapTimes(11).forEach(System.out::println);
+
+            ergast.getRacePitStops(11).forEach(System.out::println);
         } catch (IOException e) {
             e.printStackTrace();
         }
