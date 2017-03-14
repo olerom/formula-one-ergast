@@ -3,9 +3,9 @@ Java implementation to get a historical record of motor racing data from [Ergast
 
 You have to initialize Ergast object:
 
-`Ergast ergast = new Ergast(2016, 100, 2)`
+`Ergast ergast = new Ergast(2016, 100, 2);`
 
-`Ergast ergast = new Ergast(2016, 100, 2)`
+`Ergast ergast = new Ergast();`
 
 If you use default constructor, season will be set as -1, limit as 30 and offset as 0.
 You can get the following objects that satisfy Ergast queries:
