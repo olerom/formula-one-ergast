@@ -20,21 +20,21 @@ public class Application {
         Ergast ergast = new Ergast(2016, 30, 0);
 
         try {
-//            ergast.getCircuits().forEach(System.out::println);
-//            ergast.getDrivers().forEach(System.out::println);
-//
-//            ergast.getConstructors().forEach(System.out::println);
-//            ergast.getSeasons().forEach(System.out::println);
-//            ergast.getSchedules().forEach(System.out::println);
-//
-//            ergast.getRaceResults(2).forEach(System.out::println);
-//            ergast.getQualificationResults(2).forEach(System.out::println);
+            ergast.getCircuits().forEach(System.out::println);
+            ergast.getDrivers().forEach(System.out::println);
 
-//            ergast.getDriverStandings(-1).forEach(System.out::println);
-//            ergast.getConstructorStandings(-1).forEach(System.out::println);
+            ergast.getConstructors().forEach(System.out::println);
+            ergast.getSeasons().forEach(System.out::println);
+            ergast.getSchedules().forEach(System.out::println);
 
-//            ergast.getFinishingstatuses(-1).forEach(System.out::println);
-//            ergast.getLapTimes(11).forEach(System.out::println);
+            ergast.getRaceResults(2).forEach(System.out::println);
+            ergast.getQualificationResults(2).forEach(System.out::println);
+
+            ergast.getDriverStandings(-1).forEach(System.out::println);
+            ergast.getConstructorStandings(-1).forEach(System.out::println);
+
+            ergast.getFinishingstatuses(-1).forEach(System.out::println);
+            ergast.getLapTimes(11).forEach(System.out::println);
 
             ergast.getRacePitStops(11).forEach(System.out::println);
         } catch (IOException e) {

@@ -1,7 +1,10 @@
 package com.olerom.formula.core.parser;
 
 import com.google.gson.*;
-import com.olerom.formula.core.objects.*;
+import com.olerom.formula.core.objects.ConstructorStandings;
+import com.olerom.formula.core.objects.DriverStandings;
+import com.olerom.formula.core.objects.Qualification;
+import com.olerom.formula.core.objects.RaceResult;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -68,13 +71,6 @@ public class Parser {
 
     // TODO: optimize
     private static Gson getGson() {
-        return new GsonBuilder().
-                registerTypeAdapter(Location.class, new Deserializer<Location>()).
-                registerTypeAdapter(Circuit.class, new Deserializer<Circuit>()).
-                registerTypeAdapter(Time.class, new Deserializer<Time>()).
-                registerTypeAdapter(AverageSpeed.class, new Deserializer<AverageSpeed>()).
-                registerTypeAdapter(Driver.class, new Deserializer<Driver>()).
-                registerTypeAdapter(Constructor.class, new Deserializer<Constructor>()).
-                create();
+        return new Gson();
     }
 }

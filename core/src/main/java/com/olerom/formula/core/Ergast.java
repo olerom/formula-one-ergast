@@ -20,18 +20,19 @@ import static com.olerom.formula.core.parser.Parser.parse;
 public class Ergast {
 
     private final static String USER_AGENT = "Mozilla/5.0";
-    private final static String DRIVERS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/drivers.json?limit={LIMIT}&offset={OFFSET}";
-    private final static String CIRCUITS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/circuits.json?limit={LIMIT}&offset={OFFSET}";
-    private final static String CONSTRUCTORS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/constructors.json?limit={LIMIT}&offset={OFFSET}";
-    private final static String SEASONS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/seasons.json?limit={LIMIT}&offset={OFFSET}";
-    private final static String SCHEDULE_REQ = "http://ergast.com/api/{SERIES}/{SEASON}.json?limit={LIMIT}&offset={OFFSET}";
-    private final static String RESULTS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/results.json";
-    private final static String QUALIFYING_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/qualifying.json";
-    private final static String DRIVER_STANDINGS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/driverStandings.json";
-    private final static String CONSTRUCTOR_STANDINGS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/constructorStandings.json";
-    private final static String FINISHING_STATUS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/status.json";
-    private final static String LAPTIMES_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/laps.json";
-    private final static String PITSTOPS_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/pitstops.json";
+    private final static String BASE_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/{REQUEST}.json?limit={LIMIT}&offset={OFFSET}";
+    private final static String DRIVERS = "drivers";
+    private final static String CIRCUITS = "circuits";
+    private final static String CONSTRUCTORS = "constructors";
+    private final static String SEASONS = "seasons";
+    private final static String SCHEDULE = "";
+    private final static String RESULTS = "results";
+    private final static String QUALIFYING = "qualifying";
+    private final static String DRIVER_STANDINGS = "driverStandings";
+    private final static String CONSTRUCTOR_STANDINGS = "constructorStandings";
+    private final static String FINISHING_STATUS = "status";
+    private final static String LAP_TIMES = "laps";
+    private final static String PIT_STOPS = "pitstops";
 
     private String series;
     private int season;
@@ -62,7 +63,7 @@ public class Ergast {
      * @return list of drivers that satisfy your query.
      */
     public List<Driver> getDrivers() throws IOException {
-        String url = getUrl(DRIVERS_REQ);
+        String url = buildUrl(DRIVERS, -1);
         String json = getJson(url);
         return parse(json, new String[]{"DriverTable", "Drivers"}, Driver.class);
     }
@@ -71,7 +72,7 @@ public class Ergast {
      * @return list of circuits that satisfy your query.
      */
     public List<Circuit> getCircuits() throws IOException {
-        String url = getUrl(CIRCUITS_REQ);
+        String url = buildUrl(CIRCUITS, -1);
         String json = getJson(url).replace("long", "lng");
         return parse(json, new String[]{"CircuitTable", "Circuits"}, Circuit.class);
     }
@@ -80,7 +81,7 @@ public class Ergast {
      * @return list of seasons that satisfy your query.
      */
     public List<Season> getSeasons() throws IOException {
-        String url = getUrl(SEASONS_REQ);
+        String url = buildUrl(SEASONS, -1);
         String json = getJson(url);
         return parse(json, new String[]{"SeasonTable", "Seasons"}, Season.class);
     }
@@ -89,16 +90,16 @@ public class Ergast {
      * @return list of constructors that satisfy your query.
      */
     public List<Constructor> getConstructors() throws IOException {
-        String url = getUrl(CONSTRUCTORS_REQ);
+        String url = buildUrl(CONSTRUCTORS, -1);
         String json = getJson(url);
-        return parse(json, new String[]{"ConstructorTable", "Constructors"}, Constructor.class);
+        return parse(json, new String[]{"ConstructorTable", "constructors"}, Constructor.class);
     }
 
     /**
      * @return list of schedules that satisfy your query.
      */
     public List<Schedule> getSchedules() throws IOException {
-        String url = getUrl(SCHEDULE_REQ);
+        String url = buildUrl(SCHEDULE, -1);
         String json = getJson(url);
         return parse(json, new String[]{"RaceTable", "Races"}, Schedule.class);
     }
@@ -112,8 +113,7 @@ public class Ergast {
             throw new SeasonException("Race results requires season to be mentioned");
         }
 
-        String url = getUrl(RESULTS_REQ);
-        url = getResultsUrl(url, round);
+        String url = buildUrl(RESULTS, round);
         String json = getJson(url);
         return parse(json, new String[]{"RaceTable", "Races", "Results"}, RaceResult.class);
     }
@@ -127,8 +127,7 @@ public class Ergast {
             throw new SeasonException("Qualification results requires season to be mentioned");
         }
 
-        String url = getUrl(QUALIFYING_REQ);
-        url = getResultsUrl(url, round);
+        String url = buildUrl(QUALIFYING, round);
         String json = getJson(url);
         return parse(json, new String[]{"RaceTable", "Races", "QualifyingResults"}, Qualification.class);
     }
@@ -142,8 +141,7 @@ public class Ergast {
             throw new SeasonException("Driver standing requires season to be mentioned");
         }
 
-        String url = getUrl(DRIVER_STANDINGS_REQ);
-        url = getResultsUrl(url, round);
+        String url = buildUrl(DRIVER_STANDINGS, round);
         String json = getJson(url);
         return parse(json, new String[]{"StandingsTable", "StandingsLists", "DriverStandings"}, DriverStandings.class);
     }
@@ -157,8 +155,7 @@ public class Ergast {
             throw new SeasonException("Constructor standing requires season to be mentioned");
         }
 
-        String url = getUrl(CONSTRUCTOR_STANDINGS_REQ);
-        url = getResultsUrl(url, round);
+        String url = buildUrl(CONSTRUCTOR_STANDINGS, round);
         String json = getJson(url);
         return parse(json, new String[]{"StandingsTable", "StandingsLists", "ConstructorStandings"}, ConstructorStandings.class);
     }
@@ -172,8 +169,7 @@ public class Ergast {
             throw new SeasonException("Finishing status request requires season to be mentioned if you mention round");
         }
 
-        String url = getUrl(FINISHING_STATUS_REQ);
-        url = getResultsUrl(url, round);
+        String url = buildUrl(FINISHING_STATUS, round);
         String json = getJson(url);
         return parse(json, new String[]{"StatusTable", "Status"}, FinishingStatus.class);
     }
@@ -187,8 +183,7 @@ public class Ergast {
             throw new SeasonException("Finishing status request requires season and round to be mentioned");
         }
 
-        String url = getUrl(LAPTIMES_REQ);
-        url = getResultsUrl(url, round);
+        String url = buildUrl(LAP_TIMES, round);
         String json = getJson(url);
         return parse(json, new String[]{"RaceTable", "Races"}, LapTimes.class);
     }
@@ -202,23 +197,20 @@ public class Ergast {
             throw new SeasonException("Race pit stops request requires season and round to be mentioned");
         }
 
-        String url = getUrl(PITSTOPS_REQ);
-        url = getResultsUrl(url, round);
+        String url = buildUrl(PIT_STOPS, round);
         String json = getJson(url);
         return parse(json, new String[]{"RaceTable", "Races"}, RacePitStops.class);
     }
 
-    private String getResultsUrl(String url, int round) {
-        return url.replace("{ROUND}/", round == -1 ? "" : String.valueOf(round) + "/");
-    }
-
-    private String getUrl(String url) {
-        return url.
+    private String buildUrl(String request, int round) {
+        return BASE_REQ.
                 replace("{SERIES}", this.series).
                 replace("{SEASON}", this.season == -1 ? "" : String.valueOf(this.season)).
                 replace("{LIMIT}", this.limit == -1 ? "30" : String.valueOf(this.limit)).
                 replace("{OFFSET}", this.offset == -1 ? "0" : String.valueOf(this.offset)).
+                replace("{REQUEST}", request).
                 replace(this.series + "//", this.series + "/").
+                replace("{ROUND}/", round == -1 ? "" : String.valueOf(round) + "/").
                 replace("/.json", ".json");
     }
 
