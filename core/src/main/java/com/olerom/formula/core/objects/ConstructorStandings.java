@@ -20,6 +20,26 @@ public class ConstructorStandings {
         this.constructor = constructor;
     }
 
+    public int getPosition() {
+        return position;
+    }
+
+    public String getPositionText() {
+        return positionText;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public int getWins() {
+        return wins;
+    }
+
+    public Constructor getConstructor() {
+        return constructor;
+    }
+
     @Override
     public String toString() {
         return "ConstructorStandings{" +

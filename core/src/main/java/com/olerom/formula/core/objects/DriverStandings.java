@@ -24,6 +24,30 @@ public class DriverStandings {
         this.constructors = constructors;
     }
 
+    public int getPosition() {
+        return position;
+    }
+
+    public String getPositionText() {
+        return positionText;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public int getWins() {
+        return wins;
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public List<Constructor> getConstructors() {
+        return constructors;
+    }
+
     @Override
     public String toString() {
         return "DriverStandings{" +

@@ -19,11 +19,20 @@ public class Location {
         this.country = country;
     }
 
-    public Location(String lat, String lng, String locality, String country) {
-        this.lat = Float.valueOf(lat);
-        this.lng = Float.valueOf(lng);
-        this.locality = locality;
-        this.country = country;
+    public float getLat() {
+        return lat;
+    }
+
+    public float getLng() {
+        return lng;
+    }
+
+    public String getLocality() {
+        return locality;
+    }
+
+    public String getCountry() {
+        return country;
     }
 
     @Override
