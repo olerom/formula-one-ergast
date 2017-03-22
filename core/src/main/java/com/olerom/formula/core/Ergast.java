@@ -39,6 +39,11 @@ public class Ergast {
     private int limit;
     private int offset;
 
+    public final static int NO_SEASON = -1;
+    public final static int DEFAULT_LIMIT = 30;
+    public final static int DEFAULT_OFFSET = 0;
+    public final static int NO_ROUND = -1;
+
     /**
      * @param season is a season which you want to get, (-1) if you want to get all the seasons.
      * @param limit  is a number of results that are returned. up to a maximum value of 1000.
@@ -53,9 +58,9 @@ public class Ergast {
     }
 
     public Ergast() {
-        this.offset = 0;
-        this.limit = 30;
-        this.season = -1;
+        this.offset = DEFAULT_OFFSET;
+        this.limit = DEFAULT_LIMIT;
+        this.season = NO_SEASON;
         this.series = "f1";
     }
 
@@ -63,7 +68,7 @@ public class Ergast {
      * @return list of drivers that satisfy your query.
      */
     public List<Driver> getDrivers() throws IOException {
-        String url = buildUrl(DRIVERS, -1);
+        String url = buildUrl(DRIVERS, NO_ROUND);
         String json = getJson(url);
         return parse(json, new String[]{"DriverTable", "Drivers"}, Driver.class);
     }
@@ -72,7 +77,7 @@ public class Ergast {
      * @return list of circuits that satisfy your query.
      */
     public List<Circuit> getCircuits() throws IOException {
-        String url = buildUrl(CIRCUITS, -1);
+        String url = buildUrl(CIRCUITS, NO_ROUND);
         String json = getJson(url).replace("long", "lng");
         return parse(json, new String[]{"CircuitTable", "Circuits"}, Circuit.class);
     }
@@ -81,7 +86,7 @@ public class Ergast {
      * @return list of seasons that satisfy your query.
      */
     public List<Season> getSeasons() throws IOException {
-        String url = buildUrl(SEASONS, -1);
+        String url = buildUrl(SEASONS, NO_ROUND);
         String json = getJson(url);
         return parse(json, new String[]{"SeasonTable", "Seasons"}, Season.class);
     }
@@ -90,7 +95,7 @@ public class Ergast {
      * @return list of constructors that satisfy your query.
      */
     public List<Constructor> getConstructors() throws IOException {
-        String url = buildUrl(CONSTRUCTORS, -1);
+        String url = buildUrl(CONSTRUCTORS, NO_ROUND);
         String json = getJson(url);
         return parse(json, new String[]{"ConstructorTable", "constructors"}, Constructor.class);
     }
@@ -99,7 +104,7 @@ public class Ergast {
      * @return list of schedules that satisfy your query.
      */
     public List<Schedule> getSchedules() throws IOException {
-        String url = buildUrl(SCHEDULE, -1);
+        String url = buildUrl(SCHEDULE, NO_ROUND);
         String json = getJson(url);
         return parse(json, new String[]{"RaceTable", "Races"}, Schedule.class);
     }
@@ -109,7 +114,7 @@ public class Ergast {
      * @return list of race results that satisfy your query.
      */
     public List<RaceResult> getRaceResults(int round) throws IOException {
-        if (this.season == -1) {
+        if (this.season == NO_SEASON) {
             throw new SeasonException("Race results requires season to be mentioned");
         }
 
@@ -123,7 +128,7 @@ public class Ergast {
      * @return list of qualification results that satisfy your query.
      */
     public List<Qualification> getQualificationResults(int round) throws IOException {
-        if (this.season == -1) {
+        if (this.season == NO_SEASON) {
             throw new SeasonException("Qualification results requires season to be mentioned");
         }
 
@@ -137,7 +142,7 @@ public class Ergast {
      * @return list of driver standings that satisfy your query.
      */
     public List<DriverStandings> getDriverStandings(int round) throws IOException {
-        if (this.season == -1) {
+        if (this.season == NO_SEASON) {
             throw new SeasonException("Driver standing requires season to be mentioned");
         }
 
@@ -151,7 +156,7 @@ public class Ergast {
      * @return list of constructor standings that satisfy your query.
      */
     public List<ConstructorStandings> getConstructorStandings(int round) throws IOException {
-        if (this.season == -1) {
+        if (this.season == NO_SEASON) {
             throw new SeasonException("Constructor standing requires season to be mentioned");
         }
 
@@ -165,7 +170,7 @@ public class Ergast {
      * @return list of finishing statuses standings that satisfy your query.
      */
     public List<FinishingStatus> getFinishingstatuses(int round) throws IOException {
-        if (this.season == -1 && round != -1) {
+        if (this.season == NO_SEASON && round != NO_ROUND) {
             throw new SeasonException("Finishing status request requires season to be mentioned if you mention round");
         }
 
@@ -179,7 +184,7 @@ public class Ergast {
      * @return list of lap times that satisfy your query.
      */
     public List<LapTimes> getLapTimes(int round) throws IOException {
-        if (this.season == -1 || round == -1) {
+        if (this.season == NO_SEASON || round == NO_ROUND) {
             throw new SeasonException("Finishing status request requires season and round to be mentioned");
         }
 
@@ -193,7 +198,7 @@ public class Ergast {
      * @return list of pit stops that satisfy your query.
      */
     public List<RacePitStops> getRacePitStops(int round) throws IOException {
-        if (this.season == -1 || round == -1) {
+        if (this.season == NO_SEASON || round == NO_ROUND) {
             throw new SeasonException("Race pit stops request requires season and round to be mentioned");
         }
 
@@ -205,12 +210,12 @@ public class Ergast {
     private String buildUrl(String request, int round) {
         return BASE_REQ.
                 replace("{SERIES}", this.series).
-                replace("{SEASON}", this.season == -1 ? "" : String.valueOf(this.season)).
-                replace("{LIMIT}", this.limit == -1 ? "30" : String.valueOf(this.limit)).
-                replace("{OFFSET}", this.offset == -1 ? "0" : String.valueOf(this.offset)).
+                replace("{SEASON}", this.season == NO_SEASON ? "" : String.valueOf(this.season)).
+                replace("{LIMIT}", String.valueOf(this.limit)).
+                replace("{OFFSET}", String.valueOf(this.offset)).
                 replace("{REQUEST}", request).
                 replace(this.series + "//", this.series + "/").
-                replace("{ROUND}/", round == -1 ? "" : String.valueOf(round) + "/").
+                replace("{ROUND}/", round == NO_ROUND ? "" : String.valueOf(round) + "/").
                 replace("/.json", ".json");
     }
 
