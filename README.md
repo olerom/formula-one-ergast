@@ -27,6 +27,6 @@ You can get the following objects that satisfy Ergast queries:
 For example, to get information about pit stops at final race of 2016 season with 100 limit: 
 
 ```java
-Ergast ergast = new Ergast(2016, 100, 0);
+Ergast ergast = new Ergast(2016, 100, Ergast.DEFAULT_OFFSET);
 ergast.getRacePitStops(21).forEach(System.out::println);
 ```

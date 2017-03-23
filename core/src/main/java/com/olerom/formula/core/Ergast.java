@@ -1,5 +1,7 @@
 package com.olerom.formula.core;
 
+import com.olerom.formula.core.exceptions.QueryLimitException;
+import com.olerom.formula.core.exceptions.QueryOffsetException;
 import com.olerom.formula.core.exceptions.SeasonException;
 import com.olerom.formula.core.objects.*;
 
@@ -45,12 +47,19 @@ public class Ergast {
     public final static int NO_ROUND = -1;
 
     /**
-     * @param season is a season which you want to get, (-1) if you want to get all the seasons.
+     * @param season is a season which you want to get, NO_SEASON if you want to get all the seasons.
      * @param limit  is a number of results that are returned. up to a maximum value of 1000.
-     *               Please use the smallest value that your application needs. If (-1), the default value is 30.
-     * @param offset specifies an offset into the result set. If (-1), the default value is 30.
+     *               Please use the smallest value that your application needs. The default value is 30.
+     * @param offset specifies an offset into the result set. The default value is 0.
      */
     public Ergast(int season, int limit, int offset) {
+        if (limit > 1000) {
+            throw new QueryLimitException("Limit requires to be less than 1000");
+        } else if (limit < -1) {
+            throw new QueryLimitException("Limit requires to be a positive number");
+        } else if (offset < 0) {
+            throw new QueryOffsetException("Offset requires t0 be a positive number");
+        }
         this.season = season;
         this.limit = limit;
         this.offset = offset;
@@ -263,10 +272,20 @@ public class Ergast {
     }
 
     public void setLimit(int limit) {
+        if (limit > 1000) {
+            throw new QueryLimitException("Limit requires to be less than 1000");
+        } else if (limit < -1) {
+            throw new QueryLimitException("Limit requires to be a positive number");
+        }
+
         this.limit = limit;
     }
 
     public void setOffset(int offset) {
+        if (offset < 0) {
+            throw new QueryOffsetException("Offset requires t0 be a positive number");
+        }
         this.offset = offset;
     }
+
 }

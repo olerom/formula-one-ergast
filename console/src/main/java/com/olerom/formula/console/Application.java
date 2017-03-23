@@ -17,7 +17,7 @@ public class Application {
     }
 
     private void run() {
-        Ergast ergast = new Ergast(2016, 30, 0);
+        Ergast ergast = new Ergast(2016, Ergast.DEFAULT_LIMIT, Ergast.DEFAULT_OFFSET);
 
         try {
             ergast.getCircuits().forEach(System.out::println);
@@ -30,10 +30,10 @@ public class Application {
             ergast.getRaceResults(2).forEach(System.out::println);
             ergast.getQualificationResults(2).forEach(System.out::println);
 
-            ergast.getDriverStandings(-1).forEach(System.out::println);
-            ergast.getConstructorStandings(-1).forEach(System.out::println);
+            ergast.getDriverStandings(Ergast.NO_ROUND).forEach(System.out::println);
+            ergast.getConstructorStandings(Ergast.NO_ROUND).forEach(System.out::println);
 
-            ergast.getFinishingstatuses(-1).forEach(System.out::println);
+            ergast.getFinishingstatuses(Ergast.NO_ROUND).forEach(System.out::println);
             ergast.getLapTimes(11).forEach(System.out::println);
 
             ergast.getRacePitStops(11).forEach(System.out::println);
