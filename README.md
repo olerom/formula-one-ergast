@@ -1,4 +1,5 @@
-# Formula One Ergast
+# Formula One Ergast [![Build Status](https://travis-ci.org/olerom/formula-one-ergast.svg?branch=master)](https://travis-ci.org/olerom/formula-one-ergast)
+
 Java implementation to get a historical record of motor racing data from [Ergast Developer API](http://ergast.com/mrd/).
 
 You have to initialize Ergast object:
