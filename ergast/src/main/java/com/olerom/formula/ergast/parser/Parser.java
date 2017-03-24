@@ -23,7 +23,7 @@ public class Parser {
         JsonArray jarray = getJsonArray(json, jsonObjects, type);
         List<T> entities = new ArrayList<>();
 
-        Gson gson = getGson();
+        Gson gson = new Gson();
         for (int i = 0; i < jarray.size(); i++) {
             entities.add(gson.fromJson(jarray.get(i).getAsJsonObject(), type));
         }
@@ -67,10 +67,5 @@ public class Parser {
                 replace("\"Laps\"", "\"laps\"").
                 replace("\"Timings\"", "\"timings\"").
                 replace("\"PitStops\"", "\"pitStops\"");
-    }
-
-    // TODO: optimize
-    private static Gson getGson() {
-        return new Gson();
     }
 }
