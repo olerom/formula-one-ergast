@@ -48,21 +48,16 @@ public class Ergast {
 
     /**
      * @param season is a season which you want to get, NO_SEASON if you want to get all the seasons.
-     * @param limit  is a number of results that are returned. up to a maximum value of 1000.
+     * @param limit  is a number of results that are returned. Up to a maximum value of 1000.
      *               Please use the smallest value that your application needs. The default value is 30.
      * @param offset specifies an offset into the result set. The default value is 0.
+     * @throws QueryLimitException  if limit is less than 0 or large than 1000
+     * @throws QueryOffsetException if offset is less than 0
      */
     public Ergast(int season, int limit, int offset) {
-        if (limit > 1000) {
-            throw new QueryLimitException("Limit requires to be less than 1000");
-        } else if (limit < -1) {
-            throw new QueryLimitException("Limit requires to be a positive number");
-        } else if (offset < 0) {
-            throw new QueryOffsetException("Offset requires t0 be a positive number");
-        }
+        setLimit(limit);
+        setOffset(offset);
         this.season = season;
-        this.limit = limit;
-        this.offset = offset;
         this.series = "f1";
     }
 
@@ -271,9 +266,15 @@ public class Ergast {
         this.season = season;
     }
 
+
+    /**
+     * @param limit  is a number of results that are returned. Up to a maximum value of 1000.
+     *               Please use the smallest value that your application needs.
+     * @throws QueryLimitException  if limit is less than 0 or large than 1000
+     */
     public void setLimit(int limit) {
         if (limit > 1000) {
-            throw new QueryLimitException("Limit requires to be less than 1000");
+            throw new QueryLimitException("Limit requires to be no large than 1000");
         } else if (limit < -1) {
             throw new QueryLimitException("Limit requires to be a positive number");
         }
@@ -281,9 +282,13 @@ public class Ergast {
         this.limit = limit;
     }
 
+    /**
+     * @param offset specifies an offset into the result set.
+     * @throws QueryOffsetException if offset is less than 0.
+     */
     public void setOffset(int offset) {
         if (offset < 0) {
-            throw new QueryOffsetException("Offset requires t0 be a positive number");
+            throw new QueryOffsetException("Offset requires to be a positive number");
         }
         this.offset = offset;
     }
