@@ -1,10 +1,8 @@
 package com.olerom.formula.console;
 
-import com.olerom.formula.core.Ergast;
-import com.olerom.formula.core.objects.*;
+import com.olerom.formula.ergast.Ergast;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Date: 08.03.17
