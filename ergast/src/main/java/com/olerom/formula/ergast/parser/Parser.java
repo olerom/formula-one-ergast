@@ -18,7 +18,7 @@ import java.util.List;
 public class Parser {
 
     public static <T> List<T> parse(String json, String[] jsonObjects, Class<T> type) {
-        json = fixJson(json, type);
+        json = fixJson(json);
 
         JsonArray jarray = getJsonArray(json, jsonObjects, type);
         List<T> entities = new ArrayList<>();
@@ -51,7 +51,7 @@ public class Parser {
     }
 
     // TODO: optimize
-    private static String fixJson(String json, Type type) {
+    private static String fixJson(String json) {
         return json.
                 replace("\"Location\"", "\"location\"").
                 replace("\"Circuit\"", "\"circuit\"").

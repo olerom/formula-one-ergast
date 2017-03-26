@@ -2,6 +2,7 @@ package com.olerom.formula.ergast.objects;
 
 /**
  * Date: 14.03.17
+ * Timing object
  *
  * @author olerom
  */

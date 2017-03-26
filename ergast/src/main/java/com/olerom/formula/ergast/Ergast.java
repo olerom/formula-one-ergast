@@ -22,7 +22,9 @@ import static com.olerom.formula.ergast.parser.Parser.parse;
 public class Ergast {
 
     private final static String USER_AGENT = "Mozilla/5.0";
+
     private final static String BASE_REQ = "http://ergast.com/api/{SERIES}/{SEASON}/{ROUND}/{REQUEST}.json?limit={LIMIT}&offset={OFFSET}";
+
     private final static String DRIVERS = "drivers";
     private final static String CIRCUITS = "circuits";
     private final static String CONSTRUCTORS = "constructors";
