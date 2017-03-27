@@ -11,6 +11,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.olerom.formula.ergast.parser.Parser.parse;
 
@@ -20,6 +22,8 @@ import static com.olerom.formula.ergast.parser.Parser.parse;
  * @author olerom
  */
 public class Ergast {
+
+    private final static Logger LOG = Logger.getLogger(Ergast.class.getName());
 
     private final static String USER_AGENT = "Mozilla/5.0";
 
@@ -214,7 +218,7 @@ public class Ergast {
     }
 
     private String buildUrl(String request, int round) {
-        return BASE_REQ.
+        String url = BASE_REQ.
                 replace("{SERIES}", this.series).
                 replace("{SEASON}", this.season == NO_SEASON ? "" : String.valueOf(this.season)).
                 replace("{LIMIT}", String.valueOf(this.limit)).
@@ -223,6 +227,13 @@ public class Ergast {
                 replace(this.series + "//", this.series + "/").
                 replace("{ROUND}/", round == NO_ROUND ? "" : String.valueOf(round) + "/").
                 replace("/.json", ".json");
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("Build url: ").append(url);
+
+        LOG.log(Level.INFO, builder.toString());
+
+        return url;
     }
 
     private String getJson(String url) throws IOException {
