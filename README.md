@@ -5,21 +5,21 @@ Java implementation to get a historical record of motor racing data from [Ergast
 ## Add dependencies
 
 ### Gradle
-Add the JitPack repository to your build file:
+Add the JitPack repository to your build file. Add it in your root build.gradle at the end of repositories:
 
-```
+```groovy
 allprojects {
-		repositories { 
-			maven { url 'https://jitpack.io' }
-		}
-	}
+    repositories { 
+        maven { url 'https://jitpack.io' }
+    }
+}
 ```
-Add the dependency 
+Add the dependency:
 
-```
+```groovy
 dependencies {
-	        compile 'com.github.olerom:formula-one-ergast:0.1.0'
-	}
+    compile 'com.github.olerom.formula-one-ergast:ergast:0.1.0'
+}
 ```
 
 ### Maven
@@ -28,21 +28,21 @@ Add the JitPack repository to your build file:
 
 ```xml
 <repositories>
-		<repository>
-		    <id>jitpack.io</id>
-		    <url>https://jitpack.io</url>
-		</repository>
-	</repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
 ```
 
-Add the dependency 
+Add the dependency:
 
-```
-	<dependency>
-	    <groupId>com.github.olerom</groupId>
-	    <artifactId>formula-one-ergast</artifactId>
-	    <version>0.1.0</version>
-	</dependency>
+```xml
+<dependency>
+    <groupId>com.github.olerom.formula-one-ergast</groupId>
+    <artifactId>ergast</artifactId>
+    <version>0.1.0</version>
+</dependency>
 ```
 
 
