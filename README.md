@@ -46,7 +46,7 @@ Add the dependency:
 ```
 
 
-## How to use
+## Usage
 
 You have to initialize Ergast object:
 
@@ -57,7 +57,8 @@ Ergast ergast = new Ergast(2016, 100, 2);
 Ergast ergast = new Ergast();
 ```
 
-If you use default constructor, season will be set as -1, limit as 30 and offset as 0.
+If you use default constructor, season will be set as NO_SEASON, limit as DEFAULT_LIMIT and offset as DEFAULT_OFFSET.
+
 You can get the following objects that satisfy Ergast queries:
 * [Season](http://ergast.com/mrd/methods/seasons/)
 * [Qualification](http://ergast.com/mrd/methods/qualifying/)
@@ -77,3 +78,6 @@ For example, to get information about pit stops at final race of 2016 season wit
 Ergast ergast = new Ergast(2016, 100, Ergast.DEFAULT_OFFSET);
 ergast.getRacePitStops(21).forEach(System.out::println);
 ```
+
+## Help
+It would be cool, if you review the code or create a pull request.

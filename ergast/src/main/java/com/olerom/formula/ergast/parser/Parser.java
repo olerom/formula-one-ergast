@@ -15,12 +15,21 @@ import java.util.List;
  *
  * @author olerom
  */
-public class Parser {
+public class Parser<T> {
+    private String json;
+    private String[] jsonObjects;
+    private Class<T> type;
 
-    public static <T> List<T> parse(String json, String[] jsonObjects, Class<T> type) {
-        json = fixJson(json);
+    public Parser(String json, String[] jsonObjects, Class<T> type) {
+        this.json = json;
+        this.jsonObjects = jsonObjects;
+        this.type = type;
+    }
 
-        JsonArray jarray = getJsonArray(json, jsonObjects, type);
+    public List<T> parse() {
+        json = fixJson();
+
+        JsonArray jarray = getJsonArray();
         List<T> entities = new ArrayList<>();
 
         Gson gson = new Gson();
@@ -31,7 +40,7 @@ public class Parser {
         return entities;
     }
 
-    private static JsonArray getJsonArray(String json, String[] jsonObjects, Type type) {
+    private JsonArray getJsonArray() {
         JsonElement jelement = new JsonParser().parse(json);
         JsonObject jobject = jelement.getAsJsonObject();
         jobject = jobject.getAsJsonObject("MRData");
@@ -50,8 +59,8 @@ public class Parser {
         return jobject.getAsJsonArray(jsonObjects[jsonObjects.length - 1]);
     }
 
-    // TODO: optimize
-    private static String fixJson(String json) {
+    // TODO: optimize by using class type
+    private String fixJson() {
         return json.
                 replace("\"Location\"", "\"location\"").
                 replace("\"Circuit\"", "\"circuit\"").

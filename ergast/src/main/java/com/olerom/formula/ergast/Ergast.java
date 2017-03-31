@@ -4,6 +4,7 @@ import com.olerom.formula.ergast.exceptions.QueryLimitException;
 import com.olerom.formula.ergast.exceptions.QueryOffsetException;
 import com.olerom.formula.ergast.exceptions.SeasonException;
 import com.olerom.formula.ergast.objects.*;
+import com.olerom.formula.ergast.parser.Parser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +15,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static com.olerom.formula.ergast.parser.Parser.parse;
 
 /**
  * Date: 08.03.17
@@ -80,7 +80,7 @@ public class Ergast {
     public List<Driver> getDrivers() throws IOException {
         String url = buildUrl(DRIVERS, NO_ROUND);
         String json = getJson(url);
-        return parse(json, new String[]{"DriverTable", "Drivers"}, Driver.class);
+        return new Parser<>(json, new String[]{"DriverTable", "Drivers"}, Driver.class).parse();
     }
 
     /**
@@ -89,7 +89,7 @@ public class Ergast {
     public List<Circuit> getCircuits() throws IOException {
         String url = buildUrl(CIRCUITS, NO_ROUND);
         String json = getJson(url).replace("long", "lng");
-        return parse(json, new String[]{"CircuitTable", "Circuits"}, Circuit.class);
+        return new Parser<>(json, new String[]{"CircuitTable", "Circuits"}, Circuit.class).parse();
     }
 
     /**
@@ -98,7 +98,7 @@ public class Ergast {
     public List<Season> getSeasons() throws IOException {
         String url = buildUrl(SEASONS, NO_ROUND);
         String json = getJson(url);
-        return parse(json, new String[]{"SeasonTable", "Seasons"}, Season.class);
+        return new Parser<>(json, new String[]{"SeasonTable", "Seasons"}, Season.class).parse();
     }
 
     /**
@@ -107,7 +107,7 @@ public class Ergast {
     public List<Constructor> getConstructors() throws IOException {
         String url = buildUrl(CONSTRUCTORS, NO_ROUND);
         String json = getJson(url);
-        return parse(json, new String[]{"ConstructorTable", "constructors"}, Constructor.class);
+        return new Parser<>(json, new String[]{"ConstructorTable", "constructors"}, Constructor.class).parse();
     }
 
     /**
@@ -116,7 +116,7 @@ public class Ergast {
     public List<Schedule> getSchedules() throws IOException {
         String url = buildUrl(SCHEDULE, NO_ROUND);
         String json = getJson(url);
-        return parse(json, new String[]{"RaceTable", "Races"}, Schedule.class);
+        return new Parser<>(json, new String[]{"RaceTable", "Races"}, Schedule.class).parse();
     }
 
     /**
@@ -130,7 +130,7 @@ public class Ergast {
 
         String url = buildUrl(RESULTS, round);
         String json = getJson(url);
-        return parse(json, new String[]{"RaceTable", "Races", "Results"}, RaceResult.class);
+        return new Parser<>(json, new String[]{"RaceTable", "Races", "Results"}, RaceResult.class).parse();
     }
 
     /**
@@ -144,7 +144,7 @@ public class Ergast {
 
         String url = buildUrl(QUALIFYING, round);
         String json = getJson(url);
-        return parse(json, new String[]{"RaceTable", "Races", "QualifyingResults"}, Qualification.class);
+        return new Parser<>(json, new String[]{"RaceTable", "Races", "QualifyingResults"}, Qualification.class).parse();
     }
 
     /**
@@ -158,7 +158,7 @@ public class Ergast {
 
         String url = buildUrl(DRIVER_STANDINGS, round);
         String json = getJson(url);
-        return parse(json, new String[]{"StandingsTable", "StandingsLists", "DriverStandings"}, DriverStandings.class);
+        return new Parser<>(json, new String[]{"StandingsTable", "StandingsLists", "DriverStandings"}, DriverStandings.class).parse();
     }
 
     /**
@@ -172,7 +172,7 @@ public class Ergast {
 
         String url = buildUrl(CONSTRUCTOR_STANDINGS, round);
         String json = getJson(url);
-        return parse(json, new String[]{"StandingsTable", "StandingsLists", "ConstructorStandings"}, ConstructorStandings.class);
+        return new Parser<>(json, new String[]{"StandingsTable", "StandingsLists", "ConstructorStandings"}, ConstructorStandings.class).parse();
     }
 
     /**
@@ -186,7 +186,7 @@ public class Ergast {
 
         String url = buildUrl(FINISHING_STATUS, round);
         String json = getJson(url);
-        return parse(json, new String[]{"StatusTable", "Status"}, FinishingStatus.class);
+        return new Parser<>(json, new String[]{"StatusTable", "Status"}, FinishingStatus.class).parse();
     }
 
     /**
@@ -200,7 +200,7 @@ public class Ergast {
 
         String url = buildUrl(LAP_TIMES, round);
         String json = getJson(url);
-        return parse(json, new String[]{"RaceTable", "Races"}, LapTimes.class);
+        return new Parser<>(json, new String[]{"RaceTable", "Races"}, LapTimes.class).parse();
     }
 
     /**
@@ -214,7 +214,7 @@ public class Ergast {
 
         String url = buildUrl(PIT_STOPS, round);
         String json = getJson(url);
-        return parse(json, new String[]{"RaceTable", "Races"}, RacePitStops.class);
+        return new Parser<>(json, new String[]{"RaceTable", "Races"}, RacePitStops.class).parse();
     }
 
     private String buildUrl(String request, int round) {
