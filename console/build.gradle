@@ -1,4 +1,4 @@
-group 'com.olerom'
+group 'ru.olerom'
 version '0.1.1-SNAPSHOT'
 
 apply plugin: 'java'

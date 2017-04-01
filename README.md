@@ -18,7 +18,7 @@ Add the dependency:
 
 ```groovy
 dependencies {
-    compile 'com.github.olerom.formula-one-ergast:ergast:0.1.0'
+    compile 'com.github.olerom.formula-one-ergast:ergast:0.1.1'
 }
 ```
 
@@ -41,7 +41,7 @@ Add the dependency:
 <dependency>
     <groupId>com.github.olerom.formula-one-ergast</groupId>
     <artifactId>ergast</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
 </dependency>
 ```
 
