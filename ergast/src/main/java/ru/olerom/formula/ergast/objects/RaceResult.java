@@ -9,7 +9,7 @@ public class RaceResult {
     private int number;
     private int position;
     private String positionText;
-    private int points;
+    private double points;
     private Driver driver;
     private Constructor constructor;
 
@@ -20,7 +20,7 @@ public class RaceResult {
     private FastestLap fastestLap;
 
     public RaceResult(int number, int position, String positionText,
-                      int points, Driver driver, Constructor constructor,
+                      double points, Driver driver, Constructor constructor,
                       int grid, int laps, String status, Time time, FastestLap fastestLap) {
         this.number = number;
         this.position = position;
@@ -47,7 +47,7 @@ public class RaceResult {
         return positionText;
     }
 
-    public int getPoints() {
+    public double getPoints() {
         return points;
     }
 
