@@ -8,11 +8,11 @@ package ru.olerom.formula.ergast.objects;
 public class ConstructorStandings {
     private int position;
     private String positionText;
-    private int points;
+    private double points;
     private int wins;
     private Constructor constructor;
 
-    public ConstructorStandings(int position, String positionText, int points, int wins, Constructor constructor) {
+    public ConstructorStandings(int position, String positionText, double points, int wins, Constructor constructor) {
         this.position = position;
         this.positionText = positionText;
         this.points = points;
@@ -28,7 +28,7 @@ public class ConstructorStandings {
         return positionText;
     }
 
-    public int getPoints() {
+    public double getPoints() {
         return points;
     }
 

@@ -10,12 +10,12 @@ import java.util.List;
 public class DriverStandings {
     private int position;
     private String positionText;
-    private int points;
+    private double points;
     private int wins;
     private Driver driver;
     private List<Constructor> constructors;
 
-    public DriverStandings(int position, String positionText, int points, int wins, Driver driver, List<Constructor> constructors) {
+    public DriverStandings(int position, String positionText, double points, int wins, Driver driver, List<Constructor> constructors) {
         this.position = position;
         this.positionText = positionText;
         this.points = points;
@@ -32,7 +32,7 @@ public class DriverStandings {
         return positionText;
     }
 
-    public int getPoints() {
+    public double getPoints() {
         return points;
     }
 
